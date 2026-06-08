@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirim Undangan WA - Admin</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 100%; max-width: 400px; box-sizing: border-box; }
+        h2 { text-align: center; color: #333; margin-top: 0; margin-bottom: 25px; }
+        label { display: block; margin-bottom: 8px; color: #555; font-weight: 600; font-size: 14px; }
+        input[type="text"], input[type="number"] { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        input[type="text"]:focus, input[type="number"]:focus { outline: none; border-color: #25D366; }
+        button { width: 100%; padding: 14px; background-color: #25D366; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: background-color 0.3s ease; }
+        button:hover { background-color: #1ebd5a; }
+        .note { font-size: 12px; color: #888; text-align: center; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Kirim Undangan WA</h2>
+        <form id="waForm">
+            <label for="nama">Nama Tamu</label>
+            <input type="text" id="nama" placeholder="Contoh: Budi Santoso" required>
+
+            <label for="phone">Nomor WhatsApp</label>
+            <input type="number" id="phone" placeholder="Contoh: 6281234567890" required>
+
+            <button type="submit">Kirim via WhatsApp</button>
+        </form>
+        <div class="note">Link otomatis dibuat menggunakan domain GitHub Pages Anda.</div>
+    </div>
+
+    <script>
+        document.getElementById('waForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let nama = document.getElementById('nama').value.trim();
+            let phone = document.getElementById('phone').value.trim();
+            
+            // Format nomor telepon agar selalu diawali 62
+            if (phone.startsWith('0')) {
+                phone = '62' + phone.substring(1);
+            } else if (!phone.startsWith('62') && !phone.startsWith('+')) {
+                phone = '62' + phone;
+            } else if (phone.startsWith('+')) {
+                phone = phone.substring(1); // hilangkan tanda +
+            }
+
+            // Gunakan base URL otomatis yang mengarah ke root website (menghapus /admin/)
+            let baseUrl = window.location.href.split('?')[0].replace(/\\/admin\\/?(index\\.html)?$/, '/');
+            if (!baseUrl.endsWith('/')) baseUrl += '/';
+            
+            // Untuk memastikan jika dijalankan dari file lokal atau beda domain, kita set default ke URL GitHub Pages Anda
+            if(baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1') || baseUrl.includes('file://')) {
+                baseUrl = "https://nextnetworkdao.github.io/ciptaririn/";
+            }
+
+            let linkUndangan = baseUrl + "?to=" + encodeURIComponent(nama);
+
+            let message = `Assalamualaikum Warahmatullahi Wabarakatuh
+
+Tanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i ${nama} untuk menghadiri acara kami.
+
+Berikut link undangan kami, untuk info lengkap dari acara bisa kunjungi :
+
+${linkUndangan}
+
+Harap dibuka dengan chrome
+
+Merupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.
+
+Mohon maaf perihal undangan hanya di bagikan melalui pesan ini.
+
+Terima kasih banyak atas perhatiannya.
+
+Wassalamualaikum Warahmatullahi Wabarakatuh
+
+Salam Hormat
+Cipta & Ririn`;
+
+            let waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            
+            window.open(waUrl, '_blank');
+        });
+    </script>
+</body>
+</html>
