@@ -114,20 +114,7 @@
                 phone = phone.substring(1);
             }
 
-            let baseUrl = window.location.href.split('?')[0];
-            baseUrl = baseUrl.replace('/admin/index.html', '/').replace('/admin/', '/');
-            if (baseUrl.endsWith('/admin')) {
-                baseUrl = baseUrl.substring(0, baseUrl.length - 5);
-            }
-            if (!baseUrl.endsWith('/')) {
-                baseUrl += '/';
-            }
-            
-            if(baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1') || baseUrl.includes('file:')) {
-                baseUrl = "https://nextnetworkdao.github.io/ciptaririn/";
-            }
-
-            let linkUndangan = baseUrl + "?to=" + encodeURIComponent(nama);
+            let linkUndangan = "https://ciptaririn.vercel.app/?to=" + encodeURIComponent(nama);
 
             let message = "Assalamualaikum Warahmatullahi Wabarakatuh\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i " + nama + " untuk menghadiri acara kami.\n\nBerikut link undangan kami, untuk info lengkap dari acara bisa kunjungi :\n\n" + linkUndangan + "\n\nHarap dibuka dengan chrome\n\nMerupakan suatu kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.\n\nMohon maaf perihal undangan hanya di bagikan melalui pesan ini.\n\nTerima kasih banyak atas perhatiannya.\n\nWassalamualaikum Warahmatullahi Wabarakatuh\n\nSalam Hormat\nCipta & Ririn";
 
